@@ -32,11 +32,11 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 			processes = wmi.ExecQuery("SELECT ProcessId, Name, CommandLine FROM Win32_Process WHERE Name = 'nvda.exe' OR Name = 'python.exe' OR Name = 'pythonw.exe'")
 
 			for process in processes:
-				pid = process.ProcessId
+				pid = process.Properties_("ProcessId").Value
 				if pid == our_pid:
 					continue
 
-				name = process.Name.lower()
+				name = process.Properties_("Name").Value.lower()
 				if name == 'nvda.exe':
 					h = kernel32.OpenProcess(PROCESS_TERMINATE, False, pid)
 					if h != 0:
@@ -45,7 +45,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 						finally:
 							kernel32.CloseHandle(h)
 				elif name in ('python.exe', 'pythonw.exe'):
-					cmdline = process.CommandLine
+					cmdline = process.Properties_("CommandLine").Value
 					if cmdline and 'nvda.pyw' in cmdline.lower():
 						h = kernel32.OpenProcess(PROCESS_TERMINATE, False, pid)
 						if h != 0:
