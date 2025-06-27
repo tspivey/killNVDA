@@ -20,7 +20,7 @@ addon_info = {
 	"addon_description" : _("""Kills NVDA.
 """),
 	# version
-	"addon_version" : "0.5.1",
+	"addon_version" : "0.6.0",
 	# Author(s)
 	"addon_author" : u"Tyler Spivey <tspivey@pcdesk.net>",
 	# URL for the add-on documentation support
